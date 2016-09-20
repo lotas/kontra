@@ -1,0 +1,560 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset='utf8'">
+	<title>~KVN On-Line~ {HEADTITLE} </title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<link rel="StyleSheet" type="text/css" href="styles.css">
+	<link rel="StyleSheet" type="text/css" href="jqm.css">
+	<link rel="stylesheet" href="jquery.cluetip.css" type="text/css" />
+</head>
+<body>
+<div id="ajax-loading"><img src="images/ajax-loader.gif" border="0" /></div>  
+<div id="head">
+	<div id="ufo"></div>
+	<div id="chatTrigger">Чат!</div>
+	<div id="box">
+		<div id="boxl"></div>
+		<div id="boxtxt">- {RANDOMQUESTION}<br/>- {RANDOMANSWER}</div>
+		<div id="boxr"></div>
+	</div>
+	<div id="menu">
+		<a href="kontra.php">Главная</a>
+		<a href="#" onclick="return askQuestion();">Задать вопрос</a>
+		<a href="kontra.php?action=browse&type=answe" onmouseover="showMenu(this, 0)" onmouseout="hideMenu(this, 0)">Ответы</a>
+		<a href="kontra.php?action=browse&type=quest" onmouseover="showMenu(this, 1)" onmouseout="hideMenu(this, 1)">Вопросы</a>
+		<a href="#" onclick="return showFilter();">Фильтр</a>
+		<a href="kontra.php?action=setup">Setup</a>
+		<a href="kontra.php?logout=1">Lohout</a>
+		<a href="#" onclick="return submitBug();" onmouseover="showMenu(this, 2)" onmouseout="hideMenu(this, 2)">Я нашел баг!</a>
+	</div>
+</div>
+
+<div id="chat" style="display:none" class="jqmWindow">
+	<div class="input">
+		<b>{USERNAME}</b> &gt;		
+		<input type="text" name="msg" value="" id="chat-msg" />
+		<input type="button" name="say" value="go" id="chat-say" class="but" />
+		<input type="button" name="close" value="Закрыть" id="chat-close" class="but" />
+	</div>
+	<div class="messages">
+	</div>
+</div>
+
+<div id="questions">
+  <form action="kontra.php" method="get" name="top10">
+  <input type="hidden" name="action" value="read">
+  <label for="top10">Последние 50:</label>
+	<select name="qid" id="top10select" onchange="updateTooltip(this);" title="" ></select>
+	<input type=submit value="Go" id="but">
+   </form>
+</div>   
+
+<div id="askquestion" class="jqmWindow" style="display:none;">
+	<form method="post" action="kontra.php" >
+	<input type="hidden" name="action" value="ask"> 
+	<div class="appeal">{APPEAL}</div>
+	<textarea id="l" style="width:580px; height:120px; overflow-y:auto;" name="q"></textarea>
+	<br>
+	<input type="submit" value="Понеслася" class="but">
+	&nbsp;&nbsp;
+	<input type="button" onclick="return closeAskQuestion();" value="Нет, закрывай своё классное окошко" class="but">
+	</form>
+</div>
+
+<div id="submitBug" class="jqmWindow" style="display:none;">
+	<form method="post" action="kontra.php" >
+	<input type="hidden" name="action" value="bug"> 
+	<div class="appeal">Оставьте здесь замечание по поводу функционала, ошибку в работе сайта, пожелание... просто доброе словечко...</div>
+	<textarea  style="width:580px; height:120px; overflow-y:auto;" name="text"></textarea>
+	<br>
+	<input type=submit value="Высказаться" class="but">
+	&nbsp;&nbsp;
+	<input type="button" onclick="return closeSubmitBug();" value="Нет, показалось, извини" class="but">
+	</form>
+</div>
+
+<div id="quicksearch" class="jqmWindow" style="display:none;">
+	<h3>Показывать:</h3>
+<form method="post" name="on" action="kontra.php">    
+    <table border=0 cellspacing=1 cellpadding=1 class="filter">
+    <tr valign=top>
+	<td>
+		<select name="sort" class="filter-select" id="filtsort" >
+			<option value="date">По дате</option>
+			<option value="rate">По рейтингу</option>
+			<option value="shows">По просмотрам</option>
+			<option value="notan">Не отвеченные</option>
+			<option value="an">Отвеченные</option>
+			<option value="x">x</option>
+		</select>
+	</td>
+	<td>
+	    <select name="type" class="filter-select" id="filttype" style="width:110px;">
+	    	<option value="answe">Ответов</option>  	
+	    	<option value="quest">Вопросов</option>    	
+	    </select>
+    </td></tr>
+    <tr valign=top align=left>		
+    <td>
+    	<input type=hidden name="action" value="browse">
+		<select name="time" id="filttime" class="filter-select" style="width:100%;">
+       		<option value="all">за всегда</option>
+       		<option value="week">за неделю</option>
+       		<option value="3day">за 3 дня</option>
+            <option value="1day">за сегодня</option> 
+        </select>    
+    </td>
+    <td  nowrap>
+	    <select name="count" id="filtcount" class="filter-select" style="width:110px">
+	     <option value="50">50</option>
+	     <option value="20" selected="true">20</option>
+	     <option value="10">10</option>
+	     <option value="inf">Все</option>
+	    </select>       
+     </td>
+    </tr>
+
+    <tr>  <td colspan=2>
+		<input type="hidden" name="offset" value="0">
+		   <input type="submit" value="Show" id="but">    
+    </td></tr>
+    </form>
+</table>
+</div>
+
+<table class="main">
+
+    <tr valign=top>
+
+  <td colspan=2 align=center valign=top width="70%">
+  <div name=msg> {ANYSTATUS} </div><br>
+
+
+  <!-- IF TOP5 BEGIN //-->
+ 
+<font class="text"><u>20-ка последних ответов за неделю</u></font>
+<table width="99%" border=0 cellpadding=2 cellspacing=3>
+
+<!-- DYNAMIC BEGIN TOPFIVE //-->
+<tr>
+  <td colspan="2" align="left" style="color:black;" >
+  <font id="quest"><a href="kontra.php?action=read&qid={QID}">{QUESTION}</font> </td>
+</tr>
+<tr valign=center>
+ <td width="5%" align="center" class="tq_rate" bgcolor="#0099cc"><b>{RATING}</b></td>
+ <td width="88%"align="left">
+  <font id="ans"><i>{ANSWER}</i></font></td>
+</tr>
+<!-- DYNAMIC END TOPFIVE //-->
+</table>
+<!-- IF TOP5 END //-->
+
+
+ <!-- IF VIEWBUGS BEGIN //-->
+<div id="view-bugs">
+<!-- DYNAMIC BEGIN BUGS //-->
+	<div class="bug"><span class="user">{nick}</span>  <span class="date">{date}</span>
+		<p>{text}</p>
+	</div>
+<!-- DYNAMIC END BUGS //-->
+</div>
+<!-- IF VIEWBUGS END //-->
+
+<!-- IF BROWSE1 BEGIN //-->
+    <table border="0" cellspacing="1" cellpadding="1">
+    <tr valign="center">
+    <td colspan="3">
+        
+  	<table width="100%" style="font-family:tahoma, verdana; font-size:12px;"  cellpadding="1" cellspacing="2">
+    <tr valign="top">
+        <th> <a href="kontra.php?action=browse&sort=rate">
+        <img src="images/rating.png" width=12 height=11 alt="Рэйтинг" border=0></a></th>
+        <th> <a href="kontra.php?action=browse&sort=shows">
+        <img src="images/views.png" width=16 height=12 alt="Просмотры" border=0></a> </th>
+              <th> Re:</th>
+        <th> Вопрос </th>
+        <th> <a href="kontra.php?action=browse&sort=data">Дата</a> </th>
+    </tr>
+<!-- DYNAMIC BEGIN BQ //-->
+<tr align=center valign=center style="background-color:{COLOR}">
+     <td>
+		<span class="question-votes" {ISVOTED} style="background-color:{QVOTECLR}">{RATING}/{AVGRATING}</span>
+		<select name="q{QID}" style="background-color:{QVOTECLR}; display:none;" class="voting" >
+			<option value="0" class="rating">{RATING}<option value="1">+1<option value="2">+2
+			<option value="3">+3<option value="4">+4<option value="5">+5
+		</select>
+     </td>
+     <td>{TIMESVIEWED}</td>
+     <td>{QANSALL}</td>
+     <td align=left><a href="?action=read&qid={QID}">{QUESTION}</a></td>
+     <td><font color="gray" size=-2>{DATA}</font></td>
+</tr>
+<!-- DYNAMIC END BQ //-->
+    </table>
+    {PREVLINK} &lt; {CURRENTLINK} &gt; {NEXTLINK}
+    </td>
+    </tr>
+    </table>
+
+<!-- IF BROWSE1 END //-->
+
+<!-- IF BROWSE2 BEGIN //-->
+    <table border="0" cellspacing="1" cellpadding="1">
+    <tr valign="center">
+    <td colspan="3">        
+    	
+	<table width="100%" style="font-family:tahoma, verdana; font-size:12px;" cellpadding="1" cellspacing="2">
+	<tr valign="top">
+	    <th> <a href="kontra.php?action=browse&sort=rate&type=answe"><img src="images/rating.png" width="12" height="11" alt="Рэйтинг" border="0"></a></th>
+	    <th> Re:</th>
+	    <th> Шутка </th>
+	    <th> <a href="kontra.php?action=browse&sort=data&type=answe">Дата</a> </th>
+	</tr>
+<!-- DYNAMIC BEGIN BBQ //-->
+<tr align="center" valign="center" style="background-color:{COLOR}">
+     <td>
+     	<span class="answer-votes" {ISVOTED} style="background-color:{AVOTECLR}">{RATING}/{AVGRATING}</span>
+		<select name="a{AID}" style="background-color:{AVOTECLR}; display:none;" class="voting" >
+			<option value="xxx" class="rating">{RATING}<option value="1">+1<option value="2">+2
+			<option value="3">+3<option value="4">+4<option value="5">+5
+		</select>     	
+     </td>
+     <td>{QANSALL}</td>
+     <td align="left"><a href="?action=read&qid={QID}">{QUESTION}</a><br>
+             <span class="ans">{ANSWER}</span></td>
+     <td><font color="gray" size="-2">{DATA}</font></td>
+</tr>
+<!-- DYNAMIC END BBQ //-->
+    </table>
+
+    {PREVLINK} &lt; {CURRENTLINK} &gt; {NEXTLINK}
+    
+    </td>
+</form>
+    </tr>
+    </table>
+<!-- IF BROWSE2 END //-->
+
+<!-- IF READ BEGIN //-->
+<div class="views-count">Количество просмотров: <b>{TIMESVIEWED}</b></div>	
+
+<div id="question-view">	
+	<div class="rating">
+		<span class="question-votes" {ISVOTED} style="background-color:{QVOTECLR}">{QRATING}/{QAVGRATING}</span>
+		<select name="q{QID}" style="background-color:{QVOTECLR}; display:none;" class="voting" >
+			<option value="0" class="rating">{QRATING}<option value="1">+1<option value="2">+2
+			<option value="3">+3<option value="4">+4<option value="5">+5
+		</select>    
+	</div>
+	<div class="user">
+		{WHOASK}
+	</div>
+	<div class="question">		
+		 {QUESTION}
+	</div>
+</div>
+
+<div id="question-answers">
+<!-- DYNAMIC BEGIN RD //-->
+	<div class="one">
+		<div class="question">{QUESTION}</div> 
+		<div class="rating">
+			<span class="answer-votes" {ISVOTED} style="background-color:{AVOTECLR}">{RATING}/{AVGRATING}</span>
+			<select name="a{AID}" style="background-color:{AVOTECLR}; display:none;" class="voting" >
+				<option value="xxx" class="rating">{RATING}<option value="1">+1<option value="2">+2
+				<option value="3">+3<option value="4">+4<option value="5">+5
+			</select>			
+		</div>
+    	<div class="answer"><div class="user">{USER}</div>{ANSWER}</div>
+	</div>
+<!-- DYNAMIC END RD //-->
+</div>
+
+<hr style="color:#0072BC; height:1px;">
+<table cellspacing=1 cellpadding=0 border=0 width="100%">
+<tr style="color:#006699;">
+<td colspan=3>Ваши ответы на вопрос:<br><b class="quest">{QUESTION}</b></td>
+</tr>
+
+<form method=post>
+<input type=hidden name="action" value="answers">
+<input type=hidden name="qid" value="{QID}">
+
+<tr> <td width="82%"><input name="answ1" size=70 value="{A1}" id=l> </td>
+                     <input type="hidden" name="a1" value="{A1ID}">
+     <td width="14%"><input type=checkbox name="a1d" value="{A1ID}" id=chk></td>
+     <td width="4%"></td>
+</tr>
+<tr> <td><input name="answ2" size=70 value="{A2}"  id=l> </td>
+         <input type="hidden" name="a2" value="{A2ID}">
+     <td><input type=checkbox name="a2d" value="{A2ID}" id=chk></td>
+     <td></td>
+</tr>
+<tr> <td> <input name="answ3" size=70 value="{A3}" id=l></td>
+          <input type="hidden" name="a3" value="{A3ID}">
+     <td> <input type=checkbox name="a3d" value="{A3ID}" id=chk></td>
+     <td> </td>
+</tr>
+<tr> <td><input name="answ4" size=70 value="{A4}" id=l></td>
+          <input type="hidden" name="a4" value="{A4ID}">
+     <td><input type=checkbox name="a4d" value="{A4ID}" id=chk></td>
+     <td></td>
+</tr>
+<tr> <td><input name="answ5" size=70 value="{A5}" id=l> </td>
+         <input type="hidden" name="a5"  value="{A5ID}">
+     <td><input type=checkbox name="a5d" value="{A5ID}" id=chk></td>
+     <td> </td>
+</tr>
+<tr><td></td>
+<td class="text"><a href="#delnote">del</a></td>
+<td></td>
+</tr>
+
+<tr> <td colspan=3 align=center><input type=submit value="Отвечай" id=but></td>
+
+</tr>
+</table>
+</form>
+<!-- IF READ END //-->
+
+<!-- IF SHOWPROFILE BEGIN //-->
+<div id="profile">
+	<div class="userpic" style="float:right;">
+		<a href="up/{PROFILEUSER}.jpg" rel="up/{PROFILEUSER}.jpg" title="{PROFILEUSER}"><img src="up/{PROFILEUSER}.jpg" width="450" alt="{PROFILEUSER}" /></a>
+	</div>
+	<h1>{PROFILEUSER}</h1>
+	
+	<div>В народе известен как <b>{PROFILEUSER_NAME}</b></div>
+	<div>Последний раз замечен тут <b>{PROFILEUSER_LASTLOGIN}</b></div>
+	<div>Всего задал <b>{PROFILEUSER_QUESTIONS}</b> вопросов</div>
+	<div>Всего дал <b>{PROFILEUSER_ANSWERS}</b> ответов</div>
+	<div>За что и получил <b>{PROFILEUSER_RATING}</b> балов</div>
+	
+	<hr>
+	<div>Отдал голосов за вопросы:
+		<ol>
+		<!-- DYNAMIC BEGIN UP_QV //-->		
+		 <li><a href="kontra.php?action=profile&user={nick}"><b>{nick}</b></a> ({cnt})</li>
+		 <!-- DYNAMIC END UP_QV //-->		
+		 </ol>
+	</div>
+	
+	<div>Отдал голосов за ответы:
+		<ol>
+		<!-- DYNAMIC BEGIN UP_AV //-->		
+		 <li><a href="kontra.php?action=profile&user={nick}"><b>{nick}</b></a> ({cnt})</li>
+		 <!-- DYNAMIC END UP_AV //-->		
+		 </ol>
+	</div>
+	
+</div>
+<!-- IF SHOWPROFILE END //-->
+
+<!-- IF SETUP BEGIN //-->
+<div id="setup">
+	<div class="userpic">
+		<a href="up/{USERNAME}.jpg" rel="up/{USERNAME}.jpg" title="{USERNAME}"><img src="up/{USERNAME}_sm.jpg" width="100" alt="{USERNAME}" /></a>
+		<br/>Это вы...
+	</div>
+	<h4> Добро пожаловать на страничку настроек, {USERNAME} </h4>
+
+	<form action="kontra.php?action=setup" name="userpic" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="action2" value="userpic">
+		<label for="userpicFile">Загрузите свой аватар:</label>
+		<input type="file" name="userpicFile" value="" id="userpicFile" size="30"/>
+		<input type="submit" name="upload" value="Загрузить" >
+	</form>
+
+</div>
+<!-- IF SETUP END  //-->
+
+<!-- IF ADMIN BEGIN //-->
+<div id="admin">
+	
+	<div id="sql">
+		<form action="kontra.php" method="post" name="SQLform">
+		<input type="hidden" name="action" value="setup"><input type="hidden" name="action2" value="sql">
+		{QUERYSTATUS}<br>
+		Direct SQL Query:<br>
+	
+		<a name="sql"></a>
+		<textarea name="sqlquery" rows="5" cols="50"></textarea>
+		<input type="submit" value="execute">	
+		</form>
+	</div>
+	
+	<div class="output">
+		Output: <br>
+		<pre>{QUERYOUTPUT}</pre>
+	</div>
+<hr>
+</div>
+<!-- IF ADMIN END //-->
+
+<!-- IF STATISTICS BEGIN //-->
+<font class="text">Статистика:</font>
+<table id=l1>
+<!-- DYNAMIC BEGIN STATISTIC //-->
+<tr valign=top align=right >
+        <th width=100>{STYPE}
+        <td> &nbsp;
+        <td class="text">{SDATA}<br><hr width="100%">
+
+<!-- DYNAMIC END STATISTIC //-->
+</table>
+<!-- IF STATISTICS END //-->
+
+      </td>
+      <td  id="l1_1" valign="top">
+      	
+		<div id="generator">
+			<h4><u>Kontra</u> presents:</h4>
+			<div class="q">{RANDOMQUESTION}</div>
+			<div class="a">{RANDOMANSWER}</div>
+			<div class="act">
+				<a href="kontra.php" class="fleft">Обновись-ка</a>				
+				<a href="kontra.php?action=kontra&qid={RANDOMQUESTIONID}&aid={RANDOMANSWERID}" class="fright">Сохранить!</a>
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+      	
+      	<h4>Сухая статистика:</h4>
+      	<div id="overallstats">
+			  <table cellpadding="2" cellspacing="1" id="statstable">
+				<thead>
+   			     <tr>
+			       <th><acronym title="Имя чела">Nick</acronym></th>
+			       <th><acronym title="Количество вопросов">Q</acronym></th>
+			       <th style=" border-left:none;"><acronym title="Балы за вопросы">S</acronym></th>
+			       <th style=" border-left:none;"><acronym title="Средний бал за вопрос (Только вопросы с голосами)">%</acronym></th>
+			       <th><acronym title="Количество ответов">A</acronym></th>
+			       <th style=" border-left:none"><acronym title="Балов за ответы">S</acronym></th>
+			       <th style=" border-left:none"><acronym title="Средний бал за ответ (Только ответы с голосами)">%</acronym></th>
+			       <th style=" border-left:none"><acronym title="Сумма балов за вопросы и ответы"><img src="images/rating.png" width=12 height=11 alt="Рэйтинг" border=0></acronym></th>
+			       <th class="last"><acronym title="Общий средний бал">%</acronym></th>
+			       <th class="last"><acronym title="Площадь юмора - ср. бал за вопрос * ср бал за ответ... (c)Globus">Пл.</acronym></th>
+			    </tr>
+               <thead>
+			<tbody>
+			<!-- DYNAMIC BEGIN STATS //-->
+			<tr align="right" class="{CLS}">
+			     <td class="user{ADDCLASS}" nowrap><a title="{SUSER}" rel="service.php?action=uinfo&name={SUSER}" href="kontra.php?action=profile&user={SUSER}"><img src="images/user/{SIMG}" width="16" valign="absmiddle" />&nbsp;<b>{SUSER}</b></a></td>
+			     <td class="d">{SQUEST}</td>
+			     <td class="ppa">{SAVGQ}</td>
+			     <td class="pp">{SAVGQP}</td>
+			     <td class="d">{SANSW}</td>
+			     <td class="ppa">{SAVGA}</td>
+			     <td class="pp">{SAVGAP}</td>
+			     <td class="total">{SRATE}</td>
+			     <td class="pp">{SAVG}</td>
+			     <td class="pp">{SQUARE}</td>
+			</tr>
+			<!-- DYNAMIC END STATS //-->
+			</tbody>
+			</table>
+		</div>
+
+<div class="text" style="width:280px; text-align:right;"><a href="kontra.php?action=stats">Подробная статистика &raquo;</a>
+</div>
+<hr>
+<h4>Лидеры недели по баллам:</h4>
+
+<div id="weekstats">
+	<div class="left-col">
+		<h5>Ответы:</h5>
+		<table cellpadding="1" cellspacing="1">
+		<!-- DYNAMIC BEGIN WEEK_ANS_STATS //-->
+		<tr{CLS}><td align="left"><b>{USER}</b></td><td class="number">{RATE}</td></tr>
+		<!-- DYNAMIC END WEEK_ANS_STATS //-->
+		</table>
+	</div>
+	<div class="right-col">
+		<h5>Вопросы:</h5>
+		<table cellpadding="1" cellspacing="1">
+		<!-- DYNAMIC BEGIN WEEK_QUEST_STATS //-->
+		<tr{CLS}><td align="left"><b>{USER}</b></td><td class="number">{RATE}</td></tr>
+		<!-- DYNAMIC END WEEK_QUEST_STATS //-->
+		</table>
+	</div>
+</div>
+<div style="clear:both;"></div>
+<br>
+<hr width="99%">
+ <div id="totalstats">
+ 	<h4>Общие цифры:</h4>
+ 	<div class="left-col title">
+ 		<div class="hdr">&nbsp;</div>
+ 		<div>За сегодня:</div>
+ 		<div>За вчера</div>
+ 		<div>За неделю:</div>
+ 		<div>За всегда:</div>
+ 	</div>
+ 	
+ 	<div class="right-col numb">
+ 		<div class="hdr">Вопросы:</div>
+ 		<div>{TODAY_QUESTIONS}</div>
+ 		<div>{YEST_QUESTIONS}</div>
+ 		<div>{WEEK_QUESTIONS}</div>
+ 		<div>{ALL_QUESTIONS}</div>
+ 	</div>
+ 	
+	<div class="right-col numb">
+ 		<div class="hdr">Ответы:</div>
+ 		<div>{TODAY_ANSWERS}</div>
+ 		<div>{YEST_ANSWERS}</div>
+ 		<div>{WEEK_ANSWERS}</div>
+ 		<div>{ALL_ANSWERS}</div>
+ 	</div>
+ </div>
+<div style="clear:both;"></div>
+<hr width="99%">
+
+  <div id="subscriptions"> 
+	<p>Последняя рассылка <b>№{NWLNUMB}</b> была разослана <i>{NWLDATE}</i></p>
+	<div id="download"><a href="templates/arhiv/{NWLNUMB}.txt">Вспомнить всё</a></div>
+  </div>
+<hr width="99%">
+
+	 <h4>Новости</h4>
+
+	<!-- INCFILE "news.html" //-->
+
+      </td>
+    </tr>
+ <tr> <td colspan=3>
+
+
+
+  </td></tr>
+
+  <tr><td colspan=3> &nbsp; </td></tr>
+    <tr valign=center>
+      <td colspan=3 align=center style="font-size:10pt;">
+      <div style="background:white;" id=u>&copy; 2003-2008 [MF] основная идея by LoTaS, 
+      	design by Vikintosh, Newcomer, no scrolling by Bodun, непосильный вклад by все.
+      </div> <br><BR>
+  <div  style="justify:center; font-size:8pt; border:thin dashed #006699; padding:1px 3px;">
+  Все права на вопрос
+  принадлежат команде MF и автору вопроса! Все права на ответ
+  принадлежат команде MF и авторам вопроса и ответа! <br>Для использования
+  данных шуток на играх необходимо согласие всех авторов!!!! 
+</div>
+
+        </td>
+    </tr>
+    <tr> <td>
+
+  </table>
+
+  </center>
+    
+<script type="text/javascript" src="js/dropdowns.js"></script>
+<script type="text/javascript" src="js/jquery.plugins.all.js"></script>
+{QUESTIONSALL}
+<script type="text/javascript" src="js/gui.js"></script>
+<script type="text/javascript" src="js/init.js"></script>
+</body>
+</html>

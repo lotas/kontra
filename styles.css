@@ -1,0 +1,339 @@
+
+  a { font-family: Verdana, Tahoma; font-size: 12px; }
+  a:link { color: "#006699"; }
+  a:visited { color: "#006699"; }
+  a:active { color: "#00aa00";  }
+  a:hover { color: "#000022"; }
+
+  .m {color: "silver"; font-size:"10px";}
+
+  body {font-family: tahoma, verdana; font-size: 14px; color:#000000; background:#ffffff;}
+
+  #r {font-weight: bold; font-family:courier; font-size: "14px"; color:"#333399"}
+
+  #but, .but { color:#ffffff; border: 1px solid #ffffff; background-color:#0072BC;}
+
+  #l {  color:"#006699"; border:1px solid #336699; padding-left:4; width:480px;
+    padding-right:4; padding-top:1; padding-bottom:1; padding-color:"#c0c0c0"; }
+
+  #s, .s {  width: 100px; border-width: 1px; border-color: #0072CB;
+        height: 20px; font-size: 10px; font-weight: bold;
+        background-color:#ffffff; border-top-color:#000000;
+        border-bottom-color: #000000; border-left-color:#000000;
+        border-right-color:#000000;
+        color: #006699;
+        }
+
+  #top10 { width:"420px"; font-size:10px; color:"navy";
+          font-family: tahoma, verdana;
+          }
+
+  #l1 { color:"#006699"; border:1px solid #006699; padding-left:4;
+          padding-right:4; padding-top:1; padding-bottom:1; padding-color:"#c0c0c0";
+          }
+
+  #lm { color:"#006699"; border:1px solid #006699; padding-left:4;
+          padding-right:4; padding-top:1; padding-bottom:1; padding-color:"#c0c0c0";
+          }
+  #chk {  }
+
+  #q, .q {font-family: tahoma, verdana; font-size: "12px"; color:"#333333"}
+  #u, .u {font-family: tahoma, verdana; font-size: "12px"; color:"#333399";}
+
+#text,
+  .text {font-family: tahoma, verdana; font-size:"12px"; color:"#000000"}
+
+  #quest,
+  .quest{ font-weight:bold; font-family:verdana, tahoma; font-size:"12px";}
+  #ans { font-family:verdana,tahoma; font-size:"12px";}
+  
+  .ans {font-family:verdana,tahoma; font-size:12px; font-style:italic;}
+
+  hr { height:1px; color:"#006699" }
+
+  th {font-family:verdana,tahoma; font-size:10px;}
+
+#PCL { 	font-family: Verdana,Arial,Helvetica; font-style: none;	font-weight: normal;
+	text-decoration: none;	font-size: 8pt;}
+
+#PTT {	font-family: Verdana,Arial,Helvetica; font-size: 8pt; }
+
+#PST { 	font-family: Verdana,Arial,Helvetica; font-size: 8pt; }
+
+
+body {padding:0; margin:0}
+
+div#head {
+	margin:0;
+	height:107px;
+	background: #ffffff url('images/bghdr.gif') repeat-x left top;
+}
+
+div#head div#ufo {
+	width:94px;
+	height:107px;
+	float:right;
+	background: transparent url('images/ufo.gif') no-repeat right top;
+}
+
+div#head div#chatTrigger {
+	position:absolute;
+	top:0;
+	left:500px;	
+	background:#cec;
+	font:bold 12px Tahoma;
+	padding:2px 14px;
+	border: 2px solid #ff8000;
+	border-top:0;
+	z-index:999;
+	cursor:hand; cursor:pointer;
+}
+
+#chat {	
+	width:720px;
+	border:2px solid #ff8000;
+	background:#fff;
+	height:500px;
+}
+
+#chat .input { padding:0; margin:0; margin-bottom:8px;}
+#chat .input #chat-msg {width:525px; border:1px solid #ccc;}
+#chat-close {}
+
+#chat .messages {margin-top:10px; padding:4px; border:1px solid #0072BC; height:460px; overflow-y:scroll;}
+#chat .messages div {border-bottom:1px dotted #e5e5e5;}
+#chat .messages div:hover {border-bottom:1px solid #d5d5d5; background-color:#DFE8EE}
+#chat .messages .date {font:normal 0.8em Arial; color:#888; margin-right:8px;}
+#chat .messages .user {font:bold 1em Arial; color:#ff8000;}
+
+#chat .messages div.LoTaS .user {color:#5184A1;}
+#chat .messages div.Ameli .user {color:#00FF00;}
+#chat .messages div.Bodun .user {color:#008700;}
+#chat .messages div.Vikintosh .user {color:#9C4C06;}
+#chat .messages div.Rusalochka .user {color:#EC7196;}
+#chat .messages div.GrayGlobus .user {color:#6E6E6E;}
+#chat .messages div.Vinni-Puh .user {color:#F9B35F;}
+
+/* opera messages fix */
+@media all and (min-width: 0) {
+	#chat .messages {overflow:scroll;}
+} 
+
+
+div#menu {
+	margin:0;	
+	padding-top:73px;	
+	color:#fff;	
+}
+
+div#menu a { color:#fff; text-decoration:none; 
+	font:bold 14px Verdana;
+	background:transparent url('images/menuspacer.gif') no-repeat right bottom;
+	padding-right:15px;
+	margin-left:10px;
+}
+
+div#menu a:hover {
+	text-decoration:underline;
+	color:#FFFF00;
+}
+
+div#box {
+	position:absolute;
+	left:22px;
+	top:8px;
+	height:50px;	
+	padding:0;
+	margin:0;
+	background:transparent url('images/boxbg.gif') repeat-x left top;
+	width:auto;
+	color:#838383;
+	font:bold 12px Verdana;	
+}
+
+div#box div#boxtxt {padding:8px 16px; float:left; }
+
+div#box div#boxl {
+	background:transparent url('images/boxl.gif') no-repeat left top;
+	width:14px;
+	height:50px;
+	float:left;
+}
+div#box div#boxr {
+	background:transparent url('images/boxr.gif') no-repeat left top;
+	width:13px;
+	height:50px;
+	float:left;
+}
+
+div#questions {
+	margin:0 10px 6px 10px;
+}
+
+div#questions select {
+	width:80%;
+}
+
+label {color:#8e7c56;}
+
+div#askquestion {}
+
+select.filter-select {
+	height: 20px !important;	
+}
+
+tr.odd td {
+	background-color:#fff;
+}
+tr.even td {
+	background-color:#E3F2FF;
+}
+
+hr {
+	height:1px;
+	border:solid 1px #0072BC;
+}
+
+h3,h4 {
+	margin:4px 0;
+	padding:0;
+	font-family:arial;	
+}
+
+#weekstats h5 {
+	margin:0;
+	padding:2px 0;
+	font-family:arial;
+	color:#0072CB;
+}
+
+.title {
+	font-size:13px;	
+	font-family:arial;
+}
+
+.hdr {
+	font-size:13px;	
+	font-family:arial;
+	font-weight:bold;
+	color:#0072CB;
+	text-align:left;
+	background-color:#fff;
+}
+
+.numb {	text-align:right; color:#000; background-color:#E3F2FF; font-weight:bold; font-size:13px; }
+.numb div {border-bottom:1px solid #fff;}
+
+.left-col {	float:left;	}
+.right-col {
+	margin-left:25px;
+	float:left;	
+}
+#weekstats table b {font-family:arial; font-size:13px; margin-right:10px}
+td.number { text-align:right; color:#000; background-color:#E3F2FF; font-weight:bold; font-size:13px}
+
+tr.first td {border:1px dotted #FF8000}
+
+
+#overallstats table th {
+	font-size:14px; color:#0072CB; font-family:arial; margin:2px 0; cursor:pointer; cursor:hand;
+}
+#overallstats table {width:280px; font-family:tahoma; font-size:13px}
+#overallstats table td.total b, #overallstats table td.d b, #overallstats table td.pp b {background-color:#ff8000; color:#fff;}
+#overallstats table td a {text-decoration:none}
+#overallstats table td.offline a {text-decoration:none; color:#999;}
+#overallstats table td.user {text-align:left;font-family:arial; font-size:13px; margin-right:10px;}
+#overallstats table td.total {margin-left:4px; background-color:#E3F2eF; font-weight:bold}
+#overallstats table td.pp {font-size:11px; color:#ff8000;}
+#overallstats table td.ppa {font-size:11px; color:#004080;}
+#overallstats table td.ppa b {background-color:#0080C0; color:#fff;}
+
+#subscriptions {font-family:arial; font-size:12px; margin:6px 0;}
+#download {text-align:right; width:260px}
+#download a {font-family:arial; }
+
+.news {font-family:arial; font-size:13px; height:60px; overflow-y:scroll;}
+.news ul {margin:2px; padding:6px;}
+.news li i {font-size:11px; color:#0072CB}
+
+.appeal {padding:3px 4px; color:#0072CB; letter-spacing:0.1em;}
+
+#profile { text-align:left;}ing:0.1em;}
+
+#profile { text-align:left;}
+
+a img {border:0}
+
+div#generator {
+	text-align:left;
+	margin-bottom:10px;	
+	border:1px dotted #ccc;	
+	padding:4px;
+	background:transparent url(images/user/user8.png) right top no-repeat;
+}
+
+div#generator .q {font-weight:bold;}
+div#generator .a {padding-left:20px;}
+div#generator .act {margin-top:4px}
+.fleft {float:left;}
+.fright {float:right;}
+
+/* ajax popups & stuff */
+.uinfo b {padding-right:10px;}
+
+
+
+/** dropdown menu **/
+.blk-menu {border-bottom:##FF8000 solid 2px;}
+.blk-menu-sh, .blk-menu-arr{ border:#ccc solid 1px; border-bottom:0px; height:22px; color:#fff; font:bold 14px Verdana; cursor: pointer;cursor: hand; padding:0px 15px 0px 25px; 
+	background:#FFA200;}
+.blk-menu-arr-act, .blk-menu-sh-act{ border:#ccc solid 1px; border-bottom:0px; height:22px; color:#FFA200; font:bold 14px Verdana cursor: pointer;cursor: hand; padding:0px 15px 0px 25px; 
+	background:#fff;}
+
+.tq_rate {height:22px;}
+
+#setup {text-align:left;}
+.userpic {float:none; margin-left:20px; margin-right:8px;}
+.userpic img {border:2px solid #D9D0BD; padding:2px; background-color:#fff;}
+#setup form {margin:2px; padding:8px 0;}
+
+#admin {text-align:left;}
+#admin #sql {}
+#admin .output {border:1px solid #ccc; padding:4px; margin:2px;}
+#admin .output pre {width:600px; overflow-x:scroll;}
+
+#ajax-loading {position:absolute; display:none; left:95%; top:4px; z-index:9999; 
+	background:#fff; padding:2px; border:2px solid #ff8000;
+}
+
+#view-bugs {
+	text-align:left;
+	padding:10px;
+}
+
+#view-bugs .bug {margin-bottom:10px; border-bottom:1px solid 336699;}
+#view-bugs .bug .date {font:normal 10px Tahoma; color:#999;}
+#view-bugs .bug .user {font:bold 12px Tahoma; color:#ff8000;}
+#view-bugs .bug p {padding:4px 10px; margin-left:20px; border-left:4px solid #ccc; background-color:#F5F5F8;}
+
+.question-votes,
+.answer-votes {font:bold 12px Tahoma; background-color:#fff; color:#ff8000; padding:2px 3px; border:1px solid #ff8000;} 
+select.voting {font: bold 12px Tahoma; background-color:#fff; color:#ff8000; border:1px solid #ff8000;}
+option.rating {background-color:#999 !important; color:#fff !important;}
+
+
+#question-view {text-align:left; margin:5px 10px 15px 10px; border-left:5px solid #0080C0; padding-left:5px; border-bottom:1px solid #0080C0;}
+#question-view .user {color:#C0C0C0; font:normal 13px Tahoma;}
+#question-view .user span {font:bold 14px Tahoma; color:#ff8000}
+#question-view .question { margin:10px 0;}
+#question-view .rating {float:right;}
+
+#question-answers {text-align:left; margin:20px 10px;}
+#question-answers .one {margin-bottom:10px;border-left:solid 5px #34AD1F; border-bottom:1px dotted #34AD1F;}
+#question-answers .one .rating {float:right; }
+#question-answers .one .question {font-weight:bold; padding-left:10px;}
+#question-answers .one .answer {padding:4px 10px 4px 20px;}
+#question-answers .one .user {display:none; font-size:10px; color:#ff8000;}
+
+.views-count {text-align:left; font-size:12px; margin-left:10px; margin-bottom:15px;}
+.views-count b {padding:0 4px; border:1px solid #ff8000;}
