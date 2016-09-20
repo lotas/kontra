@@ -64,3 +64,22 @@ The idea was improved, redesigned, redeveloped and is now available as [loliful 
 
 Do whatever you want license. Especially if you'd make it start in the first place ;)
 
+
+# How do i run it? 
+
+Well, if you really want that, you can use [docker](https://www.docker.com)
+
+```
+   # build php5 mysql container with mysql modules
+   docker build -t "kontra_php5_apache" .
+
+   # add custom vhost using ip of your docker machine 
+   sudo echo '127.0.0.1 mf.local.net' >> /etc/hosts
+
+   # start with compose
+   docker-compose up -d
+
+   # import into mysql container kontra-db-schema.sql
+```
+
+With some luck it should be accessible through `http://mf.local.net` in your browser.

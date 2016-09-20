@@ -1,14 +1,16 @@
-<?
-	error_reporting(E_ALL);
+<?php
+	error_reporting(E_ALL ^ E_DEPRECATED ^ E_NOTICE);
 	session_start();
 		
 	// Start the output buffer
 	require_once("Timer.php");
 	$time = new Timer();
 	
-	include ("gzdoc.php");	
+	// include ("gzdoc.php");	
 
 	include("initdb.php");
+    
+
 	include("funcs.php");
 	include_once "mytempl.php";
 	include_once "mysys.php";
@@ -168,7 +170,8 @@
   	/* !!!!!!!!!!!!! email newsletter part !!!!!!!!! */
 	// newsletter($index);
 
+    global $con;
   	mysql_close($con);
 
-    GzDocOut();   	
+    // GzDocOut();   	
 ?>
