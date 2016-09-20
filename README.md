@@ -83,3 +83,13 @@ Well, if you really want that, you can use [docker](https://www.docker.com)
 ```
 
 With some luck it should be accessible through `http://mf.local.net` in your browser.
+
+# So how did it look like?
+
+![page 1](https://raw.githubusercontent.com/lotas/kontra/master/screenshots/page1.png)
+
+![page 2](https://raw.githubusercontent.com/lotas/kontra/master/screenshots/page2.png)
+
+![page 3](https://raw.githubusercontent.com/lotas/kontra/master/screenshots/page3.png)
+
+![page 4](https://raw.githubusercontent.com/lotas/kontra/master/screenshots/page4.png)
